@@ -10,39 +10,63 @@ Public genomes were included where available to contextualize our genomes.
 
 
 ## Inputs
-- Trimmed reads: /media/user/DATA/candida-glabrata/c1-c2-trimmed-fastq/
-- Trimmed public reads: /media/user/DATA/candida-glabrata-public-genomes/results/trimmed-fastq/
+
+### Prepare references
+- Trimmed reads for reference genomes: `/media/user/DATA/candida-glabrata/c1-c1-trimmed-fastq/`
+- C. glabrata CBS-138 mitochondrion gbk file: 
+`/media/user/DATA/candida-glabrata/cg1-snp-calling/cglabrata-cbs138-mitochondrion.gb`
+
+
+### Mycosnp
+- Trimmed reads: `/media/user/DATA/candida-glabrata/c1-c2-trimmed-fastq/`
+- Trimmed public reads: `/media/user/DATA/candida-glabrata-public-genomes/results/trimmed-fastq/`
 - Reference genomes: 
-/media/user/DATA/candida-glabrata/cg1-snp-calling/reference-genomes/${i}-final-ref.fasta
-- ST lists: /media/user/DATA/candida-glabrata/st-lists/
-- Public ST lists: /media/user/DATA/candida-glabrata-public-genomes/public-st-lists/
-- mycosnp input files: /media/user/DATA/candida-glabrata/cg1-snp-calling/mycosnp-input/
+`/media/user/DATA/candida-glabrata/cg1-snp-calling/reference-genomes/${i}-final-ref.fasta`
+- mycosnp input files: `/media/user/DATA/candida-glabrata/cg1-snp-calling/mycosnp-input/`
+    - mycosnp input files simply give the isolateNname,r1Ppath,r2Path in a csv format
+    - they contain these paths for both private and public data
+    - mycosnp was also configured to run on the system using nextflow.config files in each 
+mycosnp-nf-master directory (see below)
+
 
 ## Outputs
 
 ### Prepare reference genomes
-- process-reference.sh script outputs: 
-/media/user/DATA/candida-glabrata/cg1-snp-calling/reference-genomes/
+- `process-reference.sh` script outputs (intermediate and final files): 
+`/media/user/DATA/candida-glabrata/cg1-snp-calling/reference-genomes/`
 - Final prepared reference genomes for SNP calling: 
-/media/user/DATA/candida-glabrata/cg1-snp-calling/reference-genomes/${i}-final-ref.fasta
+`/media/user/DATA/candida-glabrata/cg1-snp-calling/reference-genomes/${i}-final-ref.fasta`
 
 ### Mycosnp
-- ST folders in /media/user/DATA/candida-glabrata/cg1-snp-calling/mycosnp-output/
+- ST folders in `/media/user/DATA/candida-glabrata/cg1-snp-calling/mycosnp-output/`
 
 ## Commands/Pipeline
 Reference genomes were first prepared and then SNP calling was run.
 
 ### Prepare reference genomes
-Reference genomes were prepared using the process-reference.sh bash script. The script assembles 
+Reference genomes were prepared using the `process-reference.sh` bash script. The script assembles 
 genomes using SPAdes, keeps contigs >500bp, polishes the contigs with polypolish, runs mitofinder, 
 and removes contigs identified as mitochondrial from the polished assembly (note: mitofinder uses 
 the C. glabrata CBS-138 reference genome mitochondrion as the reference for finding mitochondrial 
 contigs).
 
+*NOTE: The `process-reference.sh` script must be run from the `process-reference-env` conda env!*
+
+A sample call to the script looked like:
+```
+$ bash process-reference.sh \
+    -i /media/user/DATA/candida-glabrata/c1-c2-trimmed-fastq/38201_t_R1.fastq.gz \
+    -j /media/user/DATA/candida-glabrata/c1-c2-trimmed-fastq/38201_t_R2.fastq.gz \
+    -o reference-genomes/ \
+    -p 38201 \
+    -t 16 \
+    -m 120
+```
+
 ### Run mycosnp
 Mycosnp was run from within either:
-- ~/software/mycosnp-nf-master/
-- /media/user/DATA/mycosnp-nf-master/
+- `~/software/mycosnp-nf-master/`
+- `/media/user/DATA/mycosnp-nf-master/`
 
 depending on how many samples were in an ST. The former runs faster due to being stored on the 
 SSD, while the latter can handle larger amounts of genomes (e.g., >50).
@@ -52,8 +76,16 @@ focuses on running SNP calling.
 
 A sample call to nextflow looked like:
 ```
-(base) user@user-ThinkStation-P3-Tower:/media/user/DATA/mycosnp-nf-master$ nextflow ./main.nf -profile podman --input /media/user/DATA/candida-glabrata/cg1-snp-calling/mycosnp-input/st3-n1-n18-n19-n23-mycosnp-input.csv --fasta /media/user/DATA/candida-glabrata/cg1-snp-calling/reference-genomes/38817-final-ref.fasta --outdir /media/user/DATA/candida-glabrata/cg1-snp-calling/mycosnp-output/st3-n1-n18-n19-n23-mycosnp/ --fasttree false --iqtree true -resume
+(base) user@user-ThinkStation-P3-Tower:/media/user/DATA/mycosnp-nf-master$ nextflow ./main.nf \
+    -profile podman \
+    --input /media/user/DATA/candida-glabrata/cg1-snp-calling/mycosnp-input/st3-n1-n18-n19-n23-mycosnp-input.csv \
+    --fasta /media/user/DATA/candida-glabrata/cg1-snp-calling/reference-genomes/38817-final-ref.fasta \
+    --outdir /media/user/DATA/candida-glabrata/cg1-snp-calling/mycosnp-output/st3-n1-n18-n19-n23-mycosnp/ \
+    --fasttree false \
+    --iqtree true \
+    -resume
 ```
+
 ## Notes
 
 ### process-reference.sh script code below:
