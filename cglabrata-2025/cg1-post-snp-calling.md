@@ -19,6 +19,14 @@ This entry records post snp calling analyses to interpret SNP calling results.
 `/media/user/DATA/candida-glabrata/cg1-snp-calling/mycosnp-output/${ST}-mycosnp/combined/snpdists/combined.tsv`
 - Phylogeines: `/media/user/DATA/candida-glabrata/cg1-snp-calling/iqtree-reruns/${ST}.treefile`
 
+### Plot phylogenies with metadata
+- Phylogenies: `/media/user/DATA/candida-glabrata/cg1-snp-calling/iqtree-reruns/${ST}.treefile`
+- Public genomes metadata: `/media/user/DATA/candida-glabrata-public-genomes/public-genomes-metadata.txt`
+- Private genomes metatdata: `/media/user/DATA/candida-glabrata/CIHR_Cgla_extracted.xlsx`
+- Public genomes MLST data: `/media/user/DATA/candida-glabrata-public-genomes/public-genomes-mlst-summary.txt`
+- Public genomes ST lists: `/media/user/DATA/candida-glabrata-public-genomes/public-st-lists`
+- Private genomes ST lists: `/media/user/DATA/candida-glabrata/st-lists`
+
 
 ## Outputs
 
@@ -30,12 +38,15 @@ This entry records post snp calling analyses to interpret SNP calling results.
     - This includes two sets of files:
         - ALL snp distances
         - SNP distances <=100
-- HTML Rmd report: `../cg1-snp-calling/parse-snp-distance-R/parse-snp-distances.nb.html`
+- HTML Rmd report: `../cg1-snp-calling/parse-snp-distance-R/cg1-parse-snp-distances.nb.html`
     - This report provides for each ST:
         - A heatmap of SNP distances
         - SNP distance distribution
         - Table of SNP distances <= 100
         - Quick phylogeny
+
+### Plot phylogenies with metadata
+- Annotated phylogenies in: `../cg1-snp-calling/iqtree-reruns/${ST}_tree.pdf`
 
 
 ## Commands/Pipeline
@@ -59,8 +70,11 @@ alignment that I then used to run it again, this time successfully. A sample com
 ```
 
 ### Process SNP distances
-SNP distances were processed using the `../cg1-snp-calling/parse-snp-distances-R.Rmd` script.
+SNP distances were processed using the `../cg1-snp-calling/parse-snp-distances-R/cg1-parse-snp-distances.Rmd` script.
 
+### Plot phylogenies with metadata
+Phylogenies were plotted using the 
+`../cg1-snp-calling/parse-snp-distance-R/cg1-plot-phylogenies.Rmd` R script.
 
 ## Notes
 
@@ -68,4 +82,5 @@ SNP distances were processed using the `../cg1-snp-calling/parse-snp-distances-R
 
 ## Scripts
 
-`parse-snp-distance.Rmd`: `/media/user/DATA/candida-glabrata/cg1-snp-calling/parse-snp-distances-R/parse-snp-distances.Rmd`
+**cg1-parse-snp-distance.Rmd**: `/media/user/DATA/candida-glabrata/cg1-snp-calling/parse-snp-distances-R/cg1-parse-snp-distances.Rmd`
+**cg1-plot-phylogenies.Rmd**: `/media/user/DATA/candida-glabrata/cg1-snp-calling/parse-snp-distances-R/cg1-plot-phylogenies.Rmd`
