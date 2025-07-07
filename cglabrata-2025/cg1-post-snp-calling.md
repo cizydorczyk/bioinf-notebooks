@@ -83,4 +83,5 @@ Phylogenies were plotted using the
 ## Scripts
 
 **cg1-parse-snp-distance.Rmd**: `/media/user/DATA/candida-glabrata/cg1-snp-calling/parse-snp-distances-R/cg1-parse-snp-distances.Rmd`
+
 **cg1-plot-phylogenies.Rmd**: `/media/user/DATA/candida-glabrata/cg1-snp-calling/parse-snp-distances-R/cg1-plot-phylogenies.Rmd`
