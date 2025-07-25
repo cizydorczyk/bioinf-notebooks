@@ -28,3 +28,9 @@ can share a single output file for downstream analysis.
 Notably, the script removes all intermediate files, so no space will be taken up by large bedtools 
 genomecov intermediates!
 
+Example usage in a loop:
+```
+$ for i in $(cat ../../cparapsilosis-list.txt); do bash ../get-read-mapping-stats.sh 
+bam-files/${i}.sorted.bam ${i} cparapsilosis-read-mapping-stats.txt; done
+```
+
