@@ -27,7 +27,7 @@ The `bacterial-genomics-pipeline-2.sh` contains these steps.
 `/work/parkins_lab/project/conrad/pa-2025/snp-calling/reference-genomes/multi-patient-references.txt`
 - List of single-patient reference genomes: 
 `/work/parkins_lab/project/conrad/pa-2025/snp-calling/reference-genomes/single-patient-refrences.txt`
-
+- Input files for pipeline: `/work/parkins_lab/project/conrad/pa-2025/snp-calling/snp-calling-input/`
 
 ## Outputs
 - Output folder per ST: `/work/parkins_lab/project/conrad/snp-calling/${ST}-snp-calling/`
