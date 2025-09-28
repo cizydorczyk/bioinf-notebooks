@@ -1,7 +1,7 @@
-# pa00 - Blank Template
+# pa3 - Prepare references for SNP calling
 
 **Date:** 2025-09-28
-**System:** Local/Cluster
+**System:** Cluster
 **Project:** pa-2025
 
 ## Objective
@@ -16,6 +16,10 @@ Assemblies were polished by polypolish and then contigs <1000bp were filtered ou
 ## Inputs
 - Assemblies: 
 `/work/parkins_lab/project/conrad/pa-2025/de-novo-assemblies/pa2-unicycler-assembly-copies/${SAMPLE}-assembly.fasta`
+- List of reference genomes for multi-patient STs: 
+`/work/parkins_lab/project/conrad/pa-2025/snp-calling/reference-genomes/multi-patient-references.txt`
+- List of reference genomes for single-patient STs: 
+`/work/parkins_lab/project/conrad/pa-2025/snp-calling/reference-genomes/single-patient-references.txt`
 
 
 ## Outputs
@@ -27,10 +31,10 @@ Assemblies were polished by polypolish and then contigs <1000bp were filtered ou
 
 ## Commands/Pipeline
 
-# Polypolish
+### Polypolish
 Polypolish was run on ARC using the pa3-polish-array.slurm script.
 
-# Filter contigs <1000 bp
+### Filter contigs <1000 bp
 Contigs were filtered out using a bioawk command in a loop, similar to the one found in the 
 Scripts section below.
 
